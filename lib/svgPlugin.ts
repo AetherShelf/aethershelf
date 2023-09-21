@@ -129,7 +129,7 @@ function renderNode(node: SVGParser.Node | string): string {
 }
 function renderSvg(
   svg: SVGParser.RootNode,
-  props?: Record<string, string>,
+  props?: Record<string, string>
 ): string {
   const svgNode = svg.children[0];
 
@@ -146,7 +146,7 @@ function renderSvg(
 
 function mergeDefs(
   orgDefs: SVGParser.ElementNode,
-  newDefsRoot: SVGParser.RootNode,
+  newDefsRoot: SVGParser.RootNode
 ): string {
   if (orgDefs.tagName !== "defs") {
     return renderNode(orgDefs);
@@ -167,7 +167,7 @@ function mergeDefs(
         ? false
         : v.properties?.id === undefined
         ? false
-        : v.properties?.id === d.properties?.id,
+        : v.properties?.id === d.properties?.id
     );
     return el ?? d;
   });
@@ -195,7 +195,7 @@ export const svgPlugin: BunPlugin = {
         (child) =>
           typeof child !== "string" &&
           child.type === "element" &&
-          child.tagName === "defs",
+          child.tagName === "defs"
       );
 
       return {
@@ -219,7 +219,7 @@ export const svgPlugin: BunPlugin = {
                 value: mergeDefs(
                   //@ts-ignore
                   svg.children[0].children[defsIndex],
-                  SVGParser.parse(children.toString()),
+                  SVGParser.parse(children.toString())
                 ),
               };
             }

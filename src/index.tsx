@@ -20,5 +20,5 @@ export default (({ html }) =>
       <h1 class="text-5xl text-[#eff1f5]">
         Your personal bookshelf in the cloud. Coming Soon...
       </h1>
-    </BaseHtml>,
+    </BaseHtml>
   )) satisfies Page;
