@@ -12,7 +12,7 @@
         in
         {
           devShells.default = pkgs.mkShell {
-            buildInputs = [ pkgs.bun pkgs.turso-cli pkgs.watchexec pkgs.flyctl ];
+            buildInputs = [ pkgs.bun pkgs.turso-cli pkgs.flyctl ];
           };
         }
       );
