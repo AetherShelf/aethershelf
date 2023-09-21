@@ -1,0 +1,19 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  viewBox="233 361 48 46"
+>
+  <defs>
+    <linearGradient id="letters">
+      <stop stop-color="#04a5e5" />
+    </linearGradient>
+  </defs>
+  <g>
+    <path
+      fill="url(#letters)"
+      d="M262.73 361.068h-10.877l-18.61 45.868h10.485l6.159-16.709 7.077-18.289 13.039 34.998h10.943z"
+      aria-label="A"
+    />
+  </g>
+</svg>

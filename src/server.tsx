@@ -3,6 +3,7 @@ import type { Children } from "@kitajs/html";
 import { htmxExtensionScript } from "beth-stack";
 import { liveReloadScript } from "beth-stack/dev";
 import Index from "./index";
+const Logo = Bun.file("./src/Logo.png");
 import { html } from "@elysiajs/html";
 import style from "./styles.css";
 
@@ -29,6 +30,7 @@ export const BaseHtml = ({
   }
   <script src="https://unpkg.com/htmx.org@1.9.3"></script>
   <script src="https://unpkg.com/hyperscript.org@0.9.9"></script>
+  <link rel="icon" href="/favicon.png" type="image/png">
   <link href="/styles.css" rel="stylesheet">
 </head>
 
@@ -43,6 +45,7 @@ export type Page = ({
   html,
 }: {
   html: (value: string) => Response;
+  [key: string]: any;
 }) => Response;
 
 const app = new Elysia()
@@ -52,6 +55,13 @@ const app = new Elysia()
     set.headers["X-Repo-Uri"] = "https://github.com/aethershelf/aethershelf";
   })
   .get("/", Index)
+  .post("/signup", async ({ set }) => {
+    set.redirect = "/?subscribed=true";
+  })
+  .get("/favicon.png", ({ set }) => {
+    set.headers["content-type"] = "image/png";
+    return Logo;
+  })
   .get("/styles.css", ({ set }: { set: any }) => {
     set.headers["content-type"] = "text/css";
     return style;
