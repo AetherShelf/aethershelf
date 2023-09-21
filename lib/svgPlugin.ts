@@ -205,23 +205,29 @@ export const svgPlugin: BunPlugin = {
             children,
             ...props
           }: {
-            children: Children;
+            children?: Children;
             class?: string;
           }) => {
             if (
               children !== undefined &&
               children !== null &&
+              Array.isArray(children) &&
+              children.length !== 0 &&
               svg.children[0].type === "element" &&
               typeof svg.children[0].children[defsIndex] !== "string"
             ) {
-              svg.children[0].children[defsIndex] = {
-                type: "text",
-                value: mergeDefs(
-                  //@ts-ignore
-                  svg.children[0].children[defsIndex],
-                  SVGParser.parse(children.toString())
-                ),
-              };
+              try {
+                svg.children[0].children[defsIndex] = {
+                  type: "text",
+                  value: mergeDefs(
+                    //@ts-ignore
+                    svg.children[0].children[defsIndex],
+                    SVGParser.parse(children.toString())
+                  ),
+                };
+              } catch {
+                console.log(children);
+              }
             }
             return renderSvg(svg, props);
           },
