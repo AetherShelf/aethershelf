@@ -1,4 +1,4 @@
-import { Elysia } from "elysia";
+import { Elysia, t } from "elysia";
 import type { Children } from "@kitajs/html";
 import { htmxExtensionScript } from "beth-stack";
 import { liveReloadScript } from "beth-stack/dev";
@@ -6,6 +6,8 @@ import Index from "./index";
 const Logo = Bun.file("./src/Logo.png");
 import { html } from "@elysiajs/html";
 import style from "./styles.css";
+import { db } from "../db/client";
+import { newsletterSignups } from "../db/schema";
 
 const DEV = process.env.NODE_ENV !== "production";
 
@@ -55,9 +57,18 @@ const app = new Elysia()
     set.headers["X-Repo-Uri"] = "https://github.com/aethershelf/aethershelf";
   })
   .get("/", Index)
-  .post("/signup", async ({ set }) => {
-    set.redirect = "/?subscribed=true";
-  })
+  .post(
+    "/signup",
+    async ({ set, body }) => {
+      db.insert(newsletterSignups).values({ email: body.email }).execute();
+      set.redirect = "/?subscribed";
+    },
+    {
+      body: t.Object({
+        email: t.String({ format: "email" }),
+      }),
+    }
+  )
   .get("/favicon.png", ({ set }) => {
     set.headers["content-type"] = "image/png";
     return Logo;

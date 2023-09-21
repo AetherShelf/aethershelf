@@ -4,7 +4,6 @@ import Logotype from "./Logotype.svg";
 import { LinearGradient } from "../lib/svgPlugin";
 
 export default (({ html, query }) => {
-  console.log(query);
   return html(
     <BaseHtml class="flex h-screen w-screen justify-center items-center flex-col bg-[#eff1f5] p-12 text-center gap-8 text-[#4c4f69] dark:bg-[#1e1e2e] dark:text-[#eff1f5]">
       <Logotype class="max-w-3xl fill-current">
@@ -23,11 +22,11 @@ export default (({ html, query }) => {
       </p>
       <div class="flex flex-col gap-2 items-center">
         <h2 class="max-w-2xl text-center text-3xl font-bold tracking-tight sm:text-4xl">
-          {query.subscirbed === "true"
+          {query.subscribed === ""
             ? "Thanks for your interest in AetherShelf"
             : "Get notified when we’re launching."}
         </h2>
-        {query.subscribed ? (
+        {query.subscribed === "" ? (
           ""
         ) : (
           <form
