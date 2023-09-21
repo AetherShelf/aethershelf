@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "verbatimModuleSyntax": true,
+    "allowJs": true,
+    "checkJs": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "composite": true,
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+
+    "lib": ["es2022"],
+
+    "jsx": "react",
+    "jsxFactory": "Html.createElement",
+
+    "forceConsistentCasingInFileNames": true,
+
+    "noEmit": true,
+
+    "types": [
+      "bun-types" // add Bun global
+    ]
+  }
+}
