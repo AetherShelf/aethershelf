@@ -1,10 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="233 361 556 47">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="233 361 556 46">
   <defs>
-    <linearGradient id="rfoot">
-      <stop stop-color="#001005" />
-    </linearGradient>
     <linearGradient id="letters">
-      <stop stop-color="#547efd" />
+      <stop stop-color="#04a5e5" />
+      <stop offset="100%" stop-color="#8839ef" />
     </linearGradient>
   </defs>
   <g>
@@ -14,7 +12,6 @@
       aria-label="AETHERSHELF"
     />
     <path
-      fill="url(#rfoot)"
       d="M539.088 406.936H527.49l-3.67-6.749c5.832-.656 8.257-4.783 8.257-4.783l7.011 11.532z"
       class="c3"
       aria-label="rfoot"
