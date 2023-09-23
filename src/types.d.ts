@@ -13,4 +13,7 @@ declare global {
   declare module "*.css" {
     export default string;
   }
+  declare module "*.og.tsx" {
+    export default string;
+  }
 }

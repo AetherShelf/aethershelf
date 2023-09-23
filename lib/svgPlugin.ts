@@ -1,7 +1,6 @@
 import type { BunPlugin, OnLoadResult } from "bun";
 import type { Children } from "@kitajs/html";
 
-import path from "path";
 import * as SVGParser from "svg-parser";
 
 type CoreAttribues = {
@@ -85,10 +84,36 @@ type StopProps = {
   "stop-color"?: string;
   "stop-opacity"?: string;
 } & BaseElementAttributes;
+type PatternProps = {
+  children?: Children;
+  width?: string;
+  height?: string;
+  x?: string;
+  y?: string;
+  patternUnits: string;
+} & BaseElementAttributes;
+type PathProps = {
+  children?: Children;
+  d?: string;
+  fill?: string;
+} & BaseElementAttributes;
+type RectProps = {
+  x?: string;
+  y?: string;
+  rx?: string;
+  ry?: string;
+  width?: string;
+  height?: string;
+  fill?: string;
+} & BaseElementAttributes;
+
 declare global {
   namespace JSX {
     interface IntrinsicElements {
       defs: { children: Children } & BaseElementAttributes;
+      rect: RectProps;
+      path: PathProps;
+      pattern: PatternProps;
       stop: StopProps;
     }
   }
@@ -129,7 +154,7 @@ function renderNode(node: SVGParser.Node | string): string {
 }
 function renderSvg(
   svg: SVGParser.RootNode,
-  props?: Record<string, string>
+  props?: Record<string, string | undefined>
 ): string {
   const svgNode = svg.children[0];
 
@@ -138,6 +163,7 @@ function renderSvg(
   }
 
   return `<svg ${Object.entries(props ?? {})
+    .filter(([k, v]) => v !== undefined)
     .map(([k, v]) => `${k}="${v}"`)
     .join(" ")} ${Object.entries(svgNode.properties ?? {})
     .map(([k, v]) => `${k}="${v}"`)
@@ -201,18 +227,19 @@ export const svgPlugin: BunPlugin = {
       return {
         loader: "object",
         exports: {
-          default: ({
-            children,
-            ...props
-          }: {
-            children?: Children;
-            class?: string;
-          }) => {
+          default: (
+            props:
+              | {
+                  children?: Children;
+                  class?: string;
+                }
+              | undefined
+          ) => {
             if (
-              children !== undefined &&
-              children !== null &&
-              Array.isArray(children) &&
-              children.length !== 0 &&
+              props?.children !== undefined &&
+              props?.children !== null &&
+              Array.isArray(props.children) &&
+              props.children.length !== 0 &&
               svg.children[0].type === "element" &&
               typeof svg.children[0].children[defsIndex] !== "string"
             ) {
@@ -222,14 +249,14 @@ export const svgPlugin: BunPlugin = {
                   value: mergeDefs(
                     //@ts-ignore
                     svg.children[0].children[defsIndex],
-                    SVGParser.parse(children.toString())
+                    SVGParser.parse(props.children.toString())
                   ),
                 };
               } catch {
-                console.log(children);
+                console.log(props.children);
               }
             }
-            return renderSvg(svg, props);
+            return renderSvg(svg, { class: props?.class });
           },
         },
       } satisfies OnLoadResult;
